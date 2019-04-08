@@ -1,0 +1,10 @@
+.link-text {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 10px;
+  border-radius: 4px;
+  &:hover {
+    text-decoration: underline;
+    background: lightgrey 
+ }
+}
