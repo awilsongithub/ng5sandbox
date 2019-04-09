@@ -7,9 +7,12 @@ import { User } from '../../models/User';
   styleUrls: ['./users.component.scss']
 })
 export class UsersComponent implements OnInit {
-  users: User[];
-  showDetails: boolean = false;
+  data: User[];
+  users: User[] = [];
   loaded: boolean = false;
+  showDetails: boolean = false;
+  enableAdd: boolean = true;
+  currentClasses = {};
 
   anotherUser: User = {
     firstName: 'big bird',
@@ -19,7 +22,8 @@ export class UsersComponent implements OnInit {
       street: '123 Sesame',
       city: 'Lvll',
       state: 'KY'
-    }
+    },
+    image: 'http://lorempixel.com/600/600/people/4'
   }
 
   constructor() { 
@@ -30,42 +34,50 @@ export class UsersComponent implements OnInit {
     console.log('OnInit!...');
 
     setTimeout(() => {
-      this.loaded = true
+      this.users = this.data;
+      this.loaded = true;
     }, 2000);
 
-    this.users = [
-      {
-        firstName: 'bert',
-        lastName: 'villa',
-        age: 10,
-        address: {
-          street: '123 Sesame',
-          city: 'Lvll',
-          state: 'KY',
-        }
-      },
-      {
-        firstName: 'ernie',
-        lastName: 'Villa',
-        age: 10,
-        address: {
-          street: '123 Sesame',
-          city: 'Lvll',
-          state: 'KY'
-        }
-      },
-      {
-        firstName: 'elmo',
-        lastName: 'Villa',
-        age: 10,
-        address: {
-          street: '123 Sesame',
-          city: 'Lvll',
-          state: 'KY'
-        }
-      }
+    this.setCurrentClasses();
 
-    ]
+    this.data = [
+      {
+        firstName: "bert",
+        lastName: "villa",
+        age: 10,
+        address: {
+          street: "123 Sesame",
+          city: "Lvll",
+          state: "KY"
+        },
+        image: "http://lorempixel.com/600/600/people/3",
+        isActive: true
+      },
+      {
+        firstName: "ernie",
+        lastName: "Villa",
+        age: 10,
+        address: {
+          street: "123 Sesame",
+          city: "Lvll",
+          state: "KY"
+        },
+        image: "http://lorempixel.com/600/600/people/2"
+      },
+      {
+        firstName: "elmo",
+        lastName: "Villa",
+        age: 10,
+        address: {
+          street: "123 Sesame",
+          city: "Lvll",
+          state: "KY"
+        },
+        image: "http://lorempixel.com/600/600/people/1"
+      }
+    ];
+
+    this.setCurrentClasses();
   } /* end of ngOnInit */
 
   addUser(user: User) {
@@ -74,6 +86,12 @@ export class UsersComponent implements OnInit {
 
   toggleDetails() {
     this.showDetails = !this.showDetails;
+  }
+
+  setCurrentClasses() {
+    this.currentClasses = {
+      'btn-success': this.enableAdd
+    }
   }
 
 }
