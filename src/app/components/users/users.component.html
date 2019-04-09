@@ -10,20 +10,49 @@
 
 <ul class='list-unstyled' *ngIf="loaded && users.length > 0">
 
-  <li *ngFor='let user of users' class='card card-body mb-2' [ngClass]="{'bg-light': user.isActive }">
+  <li 
+  *ngFor='let user of users' 
+  class='card card-body mb-2' 
+  [ngClass]="{'bg-light': user.isActive }" 
+  [style.border-color]="user.isActive ? 'green' : ''">
     <div class="row">
 
       <div class="col-sm-4">
-        <img  *ngIf='user.image' [src]="user.image" alt="image of user" class='img-fluid'>
+        <img  
+        *ngIf='user.image' 
+        [src]="user.image" 
+        alt="image of user" 
+        class='img-fluid'>
       </div>
 
       <div class="col-sm-8" >
-        <h3>{{user.firstName}} {{user.lastName}} </h3>
+        <h3 
+          [ngStyle]='currentStyles'>{{user.firstName}} {{user.lastName}} </h3>
         <!-- can also use [textContent]='user.firstName' -->
 
-        <ul class='list-group' *ngIf='showDetails && user.address.street && user.address.city && user.address.state' >
-          <li class='list-group-item' [ngClass]="{'bg-light': user.isActive}">Age: {{user.age}}</li>
-          <li class='list-group-item' [ngClass]="{'bg-light': user.isActive}">Address: {{user.address.street}} {{user.address.city}} {{user.address.state}}</li>
+        <ul 
+        class='list-group' 
+        *ngIf='showDetails && user.address.street && user.address.city && user.address.state' >
+          <li 
+          class='list-group-item' 
+          [ngClass]="{'bg-light': user.isActive}">
+            Age: {{user.age}}
+          </li>
+          <li 
+          class='list-group-item' 
+          [ngClass]="{'bg-light': user.isActive}">
+            Address: {{user.address.street}} {{user.address.city}} {{user.address.state}}
+          </li>
+          <li class="list-group-item">
+            Balance: {{user.balance | currency:"USD"}} until {{1 | percent }}
+          </li>
+          <li class="list-group-item">
+            Joined: {{user.registered | date}}
+          </li>
+          <!-- prevent binding if you want to display code in UI -->
+          <li class="list-group-item" ngNonBindable >
+            <pre>{{5000 | number:"1.2"}}</pre>
+          </li>
         
         </ul>
       </div>
