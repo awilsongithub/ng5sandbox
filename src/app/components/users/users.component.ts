@@ -10,21 +10,19 @@ export class UsersComponent implements OnInit {
   data: User[];
   users: User[] = [];
   loaded: boolean = false;
-  showDetails: boolean = true;
+  showDetails: boolean = false;
   enableAdd: boolean = true;
-  currentClasses = {};
-  currentStyles = {};
 
   anotherUser: User = {
     firstName: 'big bird',
     lastName: 'Villa',
     age: 10,
-    address: {
-      street: '123 Sesame',
-      city: 'Lvll',
-      state: 'KY'
-    },
-    image: 'http://lorempixel.com/600/600/people/4'
+    // address: {
+    //   street: '123 Sesame',
+    //   city: 'Lvll',
+    //   state: 'KY'
+    // },
+    showDetails: false
   }
 
   constructor() { 
@@ -39,9 +37,6 @@ export class UsersComponent implements OnInit {
       this.loaded = true;
     }, 2000);
 
-    this.setCurrentClasses();
-    this.setCurrentStyles();
-
     this.data = [
       {
         firstName: "bert",
@@ -52,10 +47,11 @@ export class UsersComponent implements OnInit {
           city: "Lvll",
           state: "KY"
         },
-        image: "http://lorempixel.com/600/600/people/3",
+        // image: "http://lorempixel.com/600/600/people/3",
         isActive: true,
-        balance: 100,
-        registered: new Date("10/01/2018 08:30:00")
+        // balance: 100,
+        registered: new Date("10/01/2018 08:30:00"),
+        showDetails: false
       },
       {
         firstName: "ernie",
@@ -66,9 +62,10 @@ export class UsersComponent implements OnInit {
           city: "Lvll",
           state: "KY"
         },
-        image: "http://lorempixel.com/600/600/people/2",
-        balance: 50000,
-        registered: new Date("03/11/2017 04:50:00")
+        // image: "http://lorempixel.com/600/600/people/2",
+        // balance: 50000,
+        registered: new Date("03/11/2017 04:50:00"),
+        showDetails: false
       },
       {
         firstName: "elmo",
@@ -79,37 +76,32 @@ export class UsersComponent implements OnInit {
           city: "Lvll",
           state: "KY"
         },
-        image: "http://lorempixel.com/600/600/people/1",
-        balance: 100,
-        registered: new Date("10/01/2018 08:30:00")
+        // image: "http://lorempixel.com/600/600/people/1",
+        // balance: 100,
+        registered: new Date("10/01/2018 08:30:00"),
+        showDetails: false
       }
     ];
 
-    this.setCurrentClasses();
   } /* end of ngOnInit */
 
   addUser(user: User) {
-    this.users.push(user);
+    this.users.unshift(user);
   }
 
-  toggleDetails() {
-    this.showDetails = !this.showDetails;
-    this.setCurrentStyles(); // update based on new value of showDetails
-  }
-
-  setCurrentClasses() {
-    this.currentClasses = {
-      'btn-success': this.enableAdd
+  toggleDetails(index) {
+    console.log('toggle deets clicked with index: ', index)
+    let user = this.users[index];
+    if(user.address) {
+      this.users[index].showDetails = !this.users[index].showDetails;
+    } else {
+      alert('user lacks all the deets');
     }
+
   }
 
-  // set property of class to styles object 
-  setCurrentStyles() {
-    this.currentStyles = {
-      'padding-top': this.showDetails ? '0' : '40px',
-      'color': this.showDetails ? '' : 'purple',
-      'font-size': this.showDetails ? '' : '44px'
-    }
+  fireEvent(e) {
+    this.addUser(this.anotherUser);
   }
 
 }
