@@ -1,15 +1,16 @@
 export interface User {
-  firstName: string,
-  lastName: string,
-  age?: number,
+  firstName: string;
+  lastName: string;
+  age?: number;
   address?: {
-    street?: string,
-    city?: string,
-    state?: string,
-  },
+    street?: string;
+    city?: string;
+    state?: string;
+    zip?: string;
+  };
   // image?: string,
-  isActive?: boolean,
+  isActive?: boolean;
   // balance?: number,
-  registered?: any,
-  showDetails?: boolean
+  registered?: any;
+  hide?: boolean;
 }

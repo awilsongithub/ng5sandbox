@@ -1,0 +1,6 @@
+{
+  "editor.formatOnPaste": true,
+    "editor.quickSuggestionsDelay": 1000,
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false
+}

@@ -1,36 +1,42 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from '../../models/User';
+import { Component, OnInit } from "@angular/core";
+import { User } from "../../models/User";
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: "app-users",
+  templateUrl: "./users.component.html",
+  styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
+  user: User = {
+    firstName: "",
+    lastName: "",
+    age: null,
+    address: {
+      street: "",
+      city: "",
+      state: "",
+      zip: ""
+    }
+  };
   data: User[];
   users: User[] = [];
   loaded: boolean = false;
-  showDetails: boolean = false;
-  enableAdd: boolean = true;
+  showUserForm: boolean = false;
+  enableAdd: boolean = false;
 
   anotherUser: User = {
-    firstName: 'big bird',
-    lastName: 'Villa',
+    firstName: "big bird",
+    lastName: "Villa",
     age: 10,
-    // address: {
-    //   street: '123 Sesame',
-    //   city: 'Lvll',
-    //   state: 'KY'
-    // },
-    showDetails: false
-  }
+    hide: true
+  };
 
-  constructor() { 
-    console.log('construct!...')
+  constructor() {
+    console.log("construct!...");
   }
 
   ngOnInit() {
-    console.log('OnInit!...');
+    console.log("OnInit!...");
 
     setTimeout(() => {
       this.users = this.data;
@@ -45,13 +51,14 @@ export class UsersComponent implements OnInit {
         address: {
           street: "123 Sesame",
           city: "Lvll",
-          state: "KY"
+          state: "KY",
+          zip: ""
         },
         // image: "http://lorempixel.com/600/600/people/3",
         isActive: true,
         // balance: 100,
         registered: new Date("10/01/2018 08:30:00"),
-        showDetails: false
+        hide: true
       },
       {
         firstName: "ernie",
@@ -60,12 +67,13 @@ export class UsersComponent implements OnInit {
         address: {
           street: "123 Sesame",
           city: "Lvll",
-          state: "KY"
+          state: "KY",
+          zip: ""
         },
         // image: "http://lorempixel.com/600/600/people/2",
         // balance: 50000,
         registered: new Date("03/11/2017 04:50:00"),
-        showDetails: false
+        hide: true
       },
       {
         firstName: "elmo",
@@ -74,34 +82,45 @@ export class UsersComponent implements OnInit {
         address: {
           street: "123 Sesame",
           city: "Lvll",
-          state: "KY"
+          state: "KY",
+          zip: ""
         },
         // image: "http://lorempixel.com/600/600/people/1",
         // balance: 100,
         registered: new Date("10/01/2018 08:30:00"),
-        showDetails: false
+        hide: true
       }
     ];
-
   } /* end of ngOnInit */
 
-  addUser(user: User) {
-    this.users.unshift(user);
+  addUser() {
+    this.user.isActive = true;
+    this.user.registered = new Date();
+    this.users.unshift(this.user); // ngModel bound user
+    this.user = {
+      firstName: "",
+      lastName: "",
+      age: null,
+      address: {
+        street: "",
+        city: "",
+        state: "KY",
+        zip: ""
+      }
+    };
   }
 
-  toggleDetails(index) {
-    console.log('toggle deets clicked with index: ', index)
-    let user = this.users[index];
-    if(user.address) {
-      this.users[index].showDetails = !this.users[index].showDetails;
-    } else {
-      alert('user lacks all the deets');
-    }
-
+  toggleHide(user) {
+    user.hide = !user.hide;
   }
 
   fireEvent(e) {
-    this.addUser(this.anotherUser);
+    console.log(e.target.value); // input string
+    console.log(e.type); // keydown
   }
 
+  onSubmit(e) {
+    e.preventDefault();
+    console.log("submitted");
+  }
 }
