@@ -1,126 +1,136 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { User } from "../../models/User";
 
+// component decorator takes an object
 @Component({
   selector: "app-users",
   templateUrl: "./users.component.html",
   styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
-  user: User = {
-    firstName: "",
-    lastName: "",
-    age: null,
-    address: {
-      street: "",
-      city: "",
-      state: "",
-      zip: ""
-    }
-  };
+  // properties
   data: User[];
   users: User[] = [];
   loaded: boolean = false;
   showUserForm: boolean = false;
   enableAdd: boolean = false;
-
-  anotherUser: User = {
-    firstName: "big bird",
-    lastName: "Villa",
-    age: 10,
-    hide: true
+  user: User = {
+    firstName: "",
+    lastName: "",
+    email: ""
   };
+  // this decorator takes a string
+  // TODO "form: any" specifies type: form: any???
+  @ViewChild("userForm") form: any;
 
+  // methods
   constructor() {
     console.log("construct!...");
   }
 
   ngOnInit() {
-    console.log("OnInit!...");
-
+    // simulate async data fetch
     setTimeout(() => {
       this.users = this.data;
       this.loaded = true;
     }, 2000);
 
+    // fake data
     this.data = [
       {
         firstName: "bert",
         lastName: "villa",
-        age: 10,
-        address: {
-          street: "123 Sesame",
-          city: "Lvll",
-          state: "KY",
-          zip: ""
-        },
-        // image: "http://lorempixel.com/600/600/people/3",
+        email: "bert@gmail.com",
         isActive: true,
-        // balance: 100,
         registered: new Date("10/01/2018 08:30:00"),
         hide: true
       },
       {
         firstName: "ernie",
         lastName: "Villa",
-        age: 10,
-        address: {
-          street: "123 Sesame",
-          city: "Lvll",
-          state: "KY",
-          zip: ""
-        },
-        // image: "http://lorempixel.com/600/600/people/2",
-        // balance: 50000,
-        registered: new Date("03/11/2017 04:50:00"),
+        email: "ernie@gmail.com",
+        isActive: true,
+        registered: new Date("10/01/2018 08:30:00"),
         hide: true
       },
       {
         firstName: "elmo",
         lastName: "Villa",
-        age: 10,
-        address: {
-          street: "123 Sesame",
-          city: "Lvll",
-          state: "KY",
-          zip: ""
-        },
-        // image: "http://lorempixel.com/600/600/people/1",
-        // balance: 100,
+        email: "elmo@gmail.com",
+        isActive: true,
         registered: new Date("10/01/2018 08:30:00"),
         hide: true
       }
     ];
   } /* end of ngOnInit */
 
-  addUser() {
-    this.user.isActive = true;
-    this.user.registered = new Date();
-    this.users.unshift(this.user); // ngModel bound user
-    this.user = {
-      firstName: "",
-      lastName: "",
-      age: null,
-      address: {
-        street: "",
-        city: "",
-        state: "KY",
-        zip: ""
-      }
-    };
-  }
+  // gets an object. destructure out these props
+  // of User and boolean type
+  onSubmit({ value, valid }: { value: User; valid: boolean }) {
+    console.log(value);
+    if (!valid) {
+      console.log("Form is not valid");
+    } else {
+      value.isActive = true;
+      value.registered = new Date();
+      value.hide = true;
 
-  toggleHide(user) {
-    user.hide = !user.hide;
-  }
+      this.users.unshift(value);
 
-  fireEvent(e) {
-    console.log(e.target.value); // input string
-    console.log(e.type); // keydown
+      this.form.reset();
+    }
   }
+} // end class
 
-  onSubmit(e) {
-    e.preventDefault();
-    console.log("submitted");
-  }
-}
+/*================  
+  old 
+  ================== */
+
+// addUser() {
+//   this.user.isActive = true;
+//   this.user.registered = new Date();
+//   this.users.unshift(this.user); // ngModel bound user
+//   this.user = {
+//     firstName: "",
+//     lastName: "",
+//     email: ""
+//   };
+// }
+
+// toggleHide(user) {
+//   user.hide = !user.hide;
+// }
+
+// fireEvent(e) {
+//   console.log(e.target.value); // input string
+//   console.log(e.type); // keydown
+// }
+
+/*================  
+  spreadsheet 
+  ================== */
+
+// findMatch(e) {
+//   const cellNames: string[] = ["a1", "b1"];
+//   console.log("value of keyup'd cell ", e.target.value);
+//   let match: string;
+//   let matchIndex: number;
+
+//   // find cellname matching val of target
+//   cellNames.forEach((name, index) => {
+//     console.log(name);
+//     if (name === e.target.value) {
+//       match = name;
+//       matchIndex = index;
+//     }
+//   });
+
+//   this.a1 = this[match];
+
+//   // if it found a match
+//   if (match) {
+//     console.log("matchh is", match); // a1 or b1 or undefined
+//   } else {
+//     console.log("no match found");
+//   }
+// }

@@ -1,6 +1,10 @@
 {
   "editor.formatOnPaste": true,
-    "editor.quickSuggestionsDelay": 1000,
+    "editor.quickSuggestionsDelay": 300,
     "editor.tabSize": 2,
-    "editor.detectIndentation": false
+    "editor.detectIndentation": false,
+    "editor.suggest.maxVisibleSuggestions": 4,
+    "editor.suggest.shareSuggestSelections": true,
+    "javascript.suggest.completeFunctionCalls": true,
+    "typescript.suggest.completeFunctionCalls": true
 }
