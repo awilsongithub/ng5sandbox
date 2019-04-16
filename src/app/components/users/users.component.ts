@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { User } from "../../models/User";
-import { DataService } from "../../services/data.service";
+import { UserService } from "../../services/user.service";
 
 // component decorator takes an object
 @Component({
@@ -9,7 +9,6 @@ import { DataService } from "../../services/data.service";
   styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
-  // properties
   data: User[];
   users: User[];
   loaded: boolean = false;
@@ -20,17 +19,16 @@ export class UsersComponent implements OnInit {
     lastName: "",
     email: ""
   };
+
   // this decorator takes a string
   // TODO "form: any" specifies type: form: any???
   @ViewChild("userForm") form: any;
 
-  // methods
-
   // private = only avail in class
-  constructor(private dataService: DataService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
-    this.dataService.getUsers().subscribe(users => {
+    this.userService.getUsers().subscribe(users => {
       this.users = users;
       this.loaded = true;
     });
@@ -39,14 +37,13 @@ export class UsersComponent implements OnInit {
   // gets an object. destructure out these props
   // of User and boolean type
   onSubmit({ value, valid }: { value: User; valid: boolean }) {
-    console.log(value);
     if (!valid) {
       console.log("Form is not valid");
     } else {
       value.isActive = true;
       value.registered = new Date();
       value.hide = true;
-      this.dataService.addUser(value);
+      this.userService.addUser(value);
       this.form.reset();
     }
   }
