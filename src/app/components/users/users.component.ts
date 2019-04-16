@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { User } from "../../models/User";
+import { DataService } from "../../services/data.service";
 
 // component decorator takes an object
 @Component({
@@ -10,7 +11,7 @@ import { User } from "../../models/User";
 export class UsersComponent implements OnInit {
   // properties
   data: User[];
-  users: User[] = [];
+  users: User[];
   loaded: boolean = false;
   showUserForm: boolean = false;
   enableAdd: boolean = false;
@@ -24,45 +25,16 @@ export class UsersComponent implements OnInit {
   @ViewChild("userForm") form: any;
 
   // methods
-  constructor() {
-    console.log("construct!...");
-  }
+
+  // private = only avail in class
+  constructor(private dataService: DataService) {}
 
   ngOnInit() {
-    // simulate async data fetch
-    setTimeout(() => {
-      this.users = this.data;
+    this.dataService.getUsers().subscribe(users => {
+      this.users = users;
       this.loaded = true;
-    }, 2000);
-
-    // fake data
-    this.data = [
-      {
-        firstName: "bert",
-        lastName: "villa",
-        email: "bert@gmail.com",
-        isActive: true,
-        registered: new Date("10/01/2018 08:30:00"),
-        hide: true
-      },
-      {
-        firstName: "ernie",
-        lastName: "Villa",
-        email: "ernie@gmail.com",
-        isActive: true,
-        registered: new Date("10/01/2018 08:30:00"),
-        hide: true
-      },
-      {
-        firstName: "elmo",
-        lastName: "Villa",
-        email: "elmo@gmail.com",
-        isActive: true,
-        registered: new Date("10/01/2018 08:30:00"),
-        hide: true
-      }
-    ];
-  } /* end of ngOnInit */
+    });
+  } 
 
   // gets an object. destructure out these props
   // of User and boolean type
@@ -74,9 +46,7 @@ export class UsersComponent implements OnInit {
       value.isActive = true;
       value.registered = new Date();
       value.hide = true;
-
-      this.users.unshift(value);
-
+      this.dataService.addUser(value);
       this.form.reset();
     }
   }

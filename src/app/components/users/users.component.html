@@ -91,7 +91,7 @@
 
 <!-- loading & no users found messages -->
 <h4 *ngIf="!loaded">Loading users...</h4>
-<h4 *ngIf="loaded && users.length === 0">No users found</h4>
+<h4 *ngIf="loaded && users && users.length === 0">No users found</h4>
 
 <!-- list of users -->
 <ul class="list-unstyled" *ngIf="loaded && users.length > 0">
