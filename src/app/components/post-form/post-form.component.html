@@ -3,13 +3,40 @@
   <form>
     <div class="form-group">
       <label>Title</label>
-      <input type="text" name="title" class="form-control" #title>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="currentPost.title"
+        name="title"
+        #title
+      />
     </div>
     <div class="form-group">
       <label>Body</label>
-      <input type="text" name="body" class="form-control" #body>
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="currentPost.body"
+        name="body"
+        #body
+      />
     </div>
-    <button (click)="savePost(title.value, body.value)" class="btn btn-dark btn-block" >Add Post</button>
+    <input type="hidden" [(ngModel)]="currentPost.id" name="id" />
+
+    <button
+      *ngIf="!isEdit"
+      (click)="addPost(currentPost.title, currentPost.body, currentPost.id)"
+      class="btn btn-dark btn-block"
+    >Add Post
+    </button>
+
+     <button
+      *ngIf="isEdit"
+      (click)="updatePost()"
+      class="btn btn-warning btn-block"
+    >Update Post
+    </button>
+
     <!-- no preventDefault needed as event is on button not form -->
   </form>
 </div>

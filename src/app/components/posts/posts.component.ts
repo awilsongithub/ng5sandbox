@@ -9,6 +9,14 @@ import { PostService } from '../../services/post.service';
 })
 export class PostsComponent implements OnInit {
   posts: Post[];
+  emptyPost: Post = {
+    id: 0,
+    title: "", 
+    body: ""
+  }
+  currentPost: Post = this.emptyPost; // initialize to empty
+
+  isEdit: boolean = false;
 
   constructor(private postService: PostService) { }
 
@@ -21,5 +29,26 @@ export class PostsComponent implements OnInit {
   onNewPost(post: Post) {
     this.posts.unshift(post);
   }
+
+  onUpdatedPost(post: Post) {
+    this.posts.forEach( (cur, index) => {
+      if(cur.id === post.id){
+        this.posts.splice(index, 1);
+        this.posts.unshift(post);
+        this.isEdit = false;
+        this.currentPost = this.emptyPost;
+      }
+    })  
+  }
+
+  // add click handlers for update, delete
+  // that use http methods in the service
+  editPost(post: Post) {
+    this.currentPost = post;
+    this.isEdit = true;
+  }
+
+
+
 
 }
