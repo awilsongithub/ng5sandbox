@@ -41,14 +41,21 @@ export class PostsComponent implements OnInit {
     })  
   }
 
-  // add click handlers for update, delete
-  // that use http methods in the service
   editPost(post: Post) {
     this.currentPost = post;
     this.isEdit = true;
   }
 
+  removePost(post: Post) {
+    if(confirm('are you sure')) {
+      this.postService.removePost(post.id).subscribe(() => {
+        this.posts.forEach( (cur, index) => {
+          if(cur.id === post.id){
+            this.posts.splice(index, 1);
+          }
+        }) 
+      });
+    }
+  }
 
-
-
-}
+} // end of class 
