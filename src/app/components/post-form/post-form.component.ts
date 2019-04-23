@@ -8,44 +8,51 @@ import { Post } from "../../models/Post";
   styleUrls: ["./post-form.component.scss"]
 })
 export class PostFormComponent implements OnInit {
-
-  // create new event emitter called newPost
+  // event emitters
   @Output() newPost: EventEmitter<Post> = new EventEmitter();
   @Output() updatedPost: EventEmitter<Post> = new EventEmitter();
   @Input() currentPost: Post; // now a prop of this component
   @Input() isEdit: boolean; // prop from posts
-  
+
   constructor(private postService: PostService) {}
 
   ngOnInit() {}
 
+  // addPost(title, body) {
+  //   if (!title || !body) {
+  //     alert("please add post");
+  //   } else {
+  //     this.postService.savePost({ title, body } as Post).subscribe(post => {
+  //       this.newPost.emit(post); // emit event containing post
+  //     });
+  //   }
+  // }
+
   addPost(title, body) {
     if (!title || !body) {
-      alert("please add post");
+      alert("Please add post");
     } else {
       this.postService.savePost({ title, body } as Post).subscribe(post => {
-        debugger;
-        this.newPost.emit(post); // emit event containing post 
+        this.newPost.emit(post);
       });
     }
   }
 
-  updatePost() {
-    console.log('from updatepost in form c .ts', this.currentPost)
+  updatePost(currentPost: Post) {
+    console.log("from updatepost in form c .ts", this.currentPost);
 
     // TODO JSON PLACEHOLDER REQUESTS FAILING
     // this.postService.updatePost(this.currentPost).subscribe(post => {
     //   console.log(post);
     //   this.isEdit = false;
-    //   this.updatedPost.emit(post); // emit this event to parent 
+    //   this.updatedPost.emit(post); // emit this event to parent
     // })
 
     let notFromServer = {
       title: this.currentPost.title,
       body: this.currentPost.body,
-      id: 5
-    }
+      id: currentPost.id
+    };
     this.updatedPost.emit(notFromServer);
-
   }
 }

@@ -25,14 +25,14 @@
 
     <button
       *ngIf="!isEdit"
-      (click)="addPost(currentPost.title, currentPost.body, currentPost.id)"
+      (click)="addPost(title.value, body.value)"
       class="btn btn-dark btn-block"
     >Add Post
     </button>
 
      <button
       *ngIf="isEdit"
-      (click)="updatePost()"
+      (click)="updatePost(currentPost)"
       class="btn btn-warning btn-block"
     >Update Post
     </button>
