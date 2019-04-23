@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Post } from "../../models/Post";
 import { PostService } from '../../services/post.service';
 
+var window: any = window;
+console.log('this is var window', window)
+
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
